@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blackjack</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Blackjack</h1>
+      <dl class="stats">
+        <div><dt>勝ち</dt><dd id="win">0</dd></div>
+        <div><dt>負け</dt><dd id="loss">0</dd></div>
+        <div><dt>引き分け</dt><dd id="draw">0</dd></div>
+      </dl>
+    </header>
+    <div class="table">
+      <section aria-labelledby="dealer-label">
+        <h2 id="dealer-label">ディーラー <span id="dealer-score"></span></h2>
+        <ul class="hand" id="dealer-cards"></ul>
+      </section>
+      <p id="status" role="status">ゲームを読み込んでいます…</p>
+      <section aria-labelledby="player-label">
+        <h2 id="player-label">あなた <span id="player-score"></span></h2>
+        <ul class="hand" id="player-cards"></ul>
+      </section>
+      <div class="controls">
+        <button type="button" id="hit" disabled>Hit</button>
+        <button type="button" id="stand" disabled>Stand</button>
+        <button type="button" id="new" disabled>New Game</button>
+        <button type="button" id="retry" hidden>再読み込み</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
