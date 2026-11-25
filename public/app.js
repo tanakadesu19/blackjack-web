@@ -71,6 +71,7 @@ async function request(action) {
     }
     game = next;
     render();
+    recordRound(game);
     buttons.forEach(button => {
       button.disabled = (button.id === 'new') !== Boolean(game.result);
     });
@@ -84,4 +85,5 @@ async function request(action) {
 
 buttons.forEach(button => button.addEventListener('click', () => request(button.id)));
 retry.addEventListener('click', () => request());
+document.querySelector('#clear-history').addEventListener('click', () => clearRounds(game));
 request();

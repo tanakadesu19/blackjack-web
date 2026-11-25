@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Blackjack</title>
   <link rel="stylesheet" href="/style.css">
+  <script src="/history.js" defer></script>
   <script src="/app.js" defer></script>
 </head>
 <body>
@@ -34,6 +35,30 @@
         <button type="button" id="retry" hidden>再読み込み</button>
       </div>
     </div>
+    <section class="records" aria-labelledby="records-label">
+      <h2 id="records-label">戦績</h2>
+      <dl class="records-stats">
+        <div><dt>総対戦数</dt><dd id="record-total">0</dd></div>
+        <div><dt>勝利</dt><dd id="record-win">0</dd></div>
+        <div><dt>敗北</dt><dd id="record-loss">0</dd></div>
+        <div><dt>引き分け</dt><dd id="record-draw">0</dd></div>
+        <div><dt>勝率</dt><dd id="record-rate">0%</dd></div>
+        <div><dt>現在の連勝</dt><dd id="record-current">0</dd></div>
+        <div><dt>最大連勝</dt><dd id="record-best">0</dd></div>
+      </dl>
+      <div class="records-heading">
+        <h2 id="history-label">対戦履歴</h2>
+        <button type="button" id="clear-history" disabled>履歴をすべて削除</button>
+      </div>
+      <p id="history-message" role="status"></p>
+      <p id="history-empty">対戦履歴はありません。</p>
+      <table id="history-table" aria-labelledby="history-label" hidden>
+        <thead>
+          <tr><th scope="col">日時</th><th scope="col">あなた</th><th scope="col">ディーラー</th><th scope="col">勝敗</th></tr>
+        </thead>
+        <tbody id="history-rows"></tbody>
+      </table>
+    </section>
   </main>
 </body>
 </html>
