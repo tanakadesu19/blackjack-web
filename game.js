@@ -26,7 +26,7 @@ function finish(game, outcome, message) {
 }
 
 function start(deck = createDeck()) {
-  const game = { deck, player: [], dealer: [], revision: randomUUID(), result: null };
+  const game = { deck, player: [], dealer: [], actions: [], dealerDrawScores: [], revision: randomUUID(), result: null };
   for (let i = 0; i < 2; i++) {
     game.player.push(deck.pop());
     game.dealer.push(deck.pop());
@@ -43,13 +43,20 @@ function play(game, action) {
   game.revision = randomUUID();
   if (action === 'hit') {
     game.player.push(game.deck.pop());
-    if (score(game.player) > 21) finish(game, 'loss', 'バースト。あなたの負けです。');
+    const playerScore = score(game.player);
+    game.actions.push({ action, score: playerScore });
+    if (playerScore > 21) finish(game, 'loss', 'バースト。あなたの負けです。');
     return;
   }
 
-  while (score(game.dealer) < 17) game.dealer.push(game.deck.pop());
   const player = score(game.player);
-  const dealer = score(game.dealer);
+  game.actions.push({ action, score: player });
+  let dealer = score(game.dealer);
+  while (dealer < 17) {
+    game.dealer.push(game.deck.pop());
+    dealer = score(game.dealer);
+    game.dealerDrawScores.push(dealer);
+  }
   if (dealer > 21) finish(game, 'win', 'ディーラーがバースト。あなたの勝ちです。');
   else if (player > dealer) finish(game, 'win', 'あなたの勝ちです。');
   else if (player < dealer) finish(game, 'loss', 'あなたの負けです。');
@@ -63,6 +70,7 @@ function view({ game, stats }) {
     player: { cards: game.player, score: score(game.player) },
     dealer: { cards: game.result ? dealer : [...dealer, null], score: score(dealer) },
     result: game.result,
+    ...(game.result && { replay: { actions: game.actions, dealerDrawScores: game.dealerDrawScores } }),
     stats
   };
 }
